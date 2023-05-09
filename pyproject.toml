@@ -1,77 +1,25 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project]
-name = "openai_forward"
-description = "🚀 Openai api forward · OpenAI 接口转发服务 · stream forwarding"
-authors = [
-    { name = "kunyuan", email = "beidongjiedeguang@gmail.com" },
-]
-requires-python = ">=3.6"
+[tool.poetry]
+name = "gpt-proxy"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
 readme = "README.md"
-keywords = ["openai", "chatgpt", "openai-api", "openai-proxy", "forward", "streaming-api", "fastapi", "python"]
-classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3"
-]
+packages = [{include = "gpt_proxy"}]
 
-dependencies = [
-    "loguru",
-    "sparrow-python>=0.1.2",
-    "fastapi",
-    "uvicorn",
-    "orjson",
-    "python-dotenv",
-    "httpx",
-    "pytz"
-]
-
-dynamic = ["version"]
-
-[project.urls]
-Homepage = "https://github.com/beidongjiedeguang/openai-forward"
-Documentation = "https://github.com/beidongjiedeguang/openai-forward#openai-forward"
-Issues = "https://github.com/beidongjiedeguang/openai-forward/issues"
-Source = "https://github.com/beidongjiedeguang/openai-forward"
-
-[project.optional-dependencies]
-ssl = [
-    "certbot"
-]
-chatgpt = [
-    "revChatGPT",
-]
-bard = [
-    "GoogleBard",
-]
-edge = [
-    "EdgeGPT",
-]
-
-[project.scripts]
-openai_forward = "openai_forward.__main__:main"
-openai-forward = "openai_forward.__main__:main"
-aifwd = "openai_forward.__main__:main"
-
-[tool.hatch.version]
-path = "openai_forward/__init__.py"
-
-[tool.isort]
-profile = "black"
-
-[tool.hatch.build]
-include = [
-    "openai_forward/**/*.py",
-]
-exclude = [
-]
-
-artifacts = [
-    "openai_forward/web/index.js",
-]
+[tool.poetry.dependencies]
+python = "^3.8"
+loguru = "^0.7.0"
+fastapi = "^0.95.1"
+uvicorn = "^0.22.0"
+orjson = "^3.8.12"
+python-dotenv = "^1.0.0"
+httpx = "^0.24.0"
+pytz = "^2023.3"
+sparrow-python = "^0.1.3"
+schema = "^0.7.5"
+schemas = "^0.7.1"
 
 
-[tool.hatch.build.targets.wheel]
-packages = ["openai_forward"]
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -40,7 +40,7 @@ class Cli:
             os.environ['IP_BLACKLIST'] = ip_blacklist
 
         uvicorn.run(
-            app="openai_forward.app:app",
+            app="app:app",
             host="0.0.0.0",
             port=port,
             workers=workers,
