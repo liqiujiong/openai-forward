@@ -70,7 +70,7 @@ class OpenaiBase:
         elif auth and str(auth).startswith("Bearer our-"):
             ourkey = auth.split("Bearer ")
             auth = get_our_key(ourkey)
-            tmp_headers = {'Authorization': auth}
+            tmp_headers = {'Authorization': auth} if auth else {}
         elif cls._default_api_key_list:
             auth = "Bearer " + next(cls._cycle_api_key)
             tmp_headers = {'Authorization': auth}
