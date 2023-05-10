@@ -4,6 +4,7 @@ from loguru import logger
 import httpx
 from starlette.background import BackgroundTask
 import os
+import key_config
 from itertools import cycle
 from content.chat import parse_chat_completions, ChatSaver
 from config import env2list
@@ -53,6 +54,11 @@ class OpenaiBase:
             logger.debug(f"log chat (not) error:\n{e=}")
 
     @classmethod
+    async def get_our_key(key: str):
+        key_dict = key_config.key_dict
+        return key_dict.get('key')
+
+    @classmethod
     async def _reverse_proxy(cls, request: Request):
         client: httpx.AsyncClient = request.app.state.client
         url_path = request.url.path
@@ -61,6 +67,10 @@ class OpenaiBase:
         headers = dict(request.headers)
         auth = headers.pop("authorization", None)
         if auth and str(auth).startswith("Bearer sk-"):
+            tmp_headers = {'Authorization': auth}
+        elif auth and str(auth).startswith("Bearer our-"):
+            ourkey = auth.split("Bearer ")
+            auth = self.get_our_key(ourkey)
             tmp_headers = {'Authorization': auth}
         elif cls._default_api_key_list:
             auth = "Bearer " + next(cls._cycle_api_key)
